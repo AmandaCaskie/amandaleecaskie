@@ -1,0 +1,25 @@
+extends(src='layout.sgr')
+  block(name='content')
+    h1 {{dato.home_page[0].title}}
+    h2 {{dato.home_page[0].tagline}}
+
+    // pre {{ JSON.stringify( dato.home_page[0], null, 2 ) }}
+    #sections
+      each(loop='section in dato.home_page[0].sections')
+
+        section(id='hair')
+          h3 {{section.title}}
+          .inner.grid
+            .image
+              img(src='//{{ dato._meta.imgixHost + section.image.path }}')
+
+            .info
+              div(md).
+                {{ section.copy }}
+              if(condition="{{ section.includeBookOnlineButton == true }}")
+                a(href class="btn btn-primary" onclick="Calendly.showPopupWidget('https://calendly.com/amandacaskiehair');return false;") Book Online
+              if(condition="{{ section.includeClassList == true }}")
+                p Upcoming Classes
+                ul
+                  each(loop='event in dato.class')
+                    li(mdi) {{ event.title }} on {{ df(event.date, "mmm  d") }} at [{{ event.location }}]({{ event.link }}). {{ event.price}}.

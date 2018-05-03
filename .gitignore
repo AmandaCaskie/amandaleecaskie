@@ -6,3 +6,7 @@
 /.bowerrc
 /.DS_Store
 Grid.css
+/.env
+.DS_Store
+/public
+/node_modules
