@@ -123,6 +123,7 @@ section {
       & img {
         max-width: 100%;
         width: 250px;
+        border-radius: 50%;
       }
       & h2, & h3 {
         margin: 0;
