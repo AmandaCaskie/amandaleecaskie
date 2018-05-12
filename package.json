@@ -10,6 +10,7 @@
   "dependencies": {
     "dateformat": "^3.0.3",
     "dotenv": "^5.0.1",
+    "markdown-it-attrs": "^2.0.0",
     "postcss-mixins": "^6.2.0",
     "reshape-standard": "^3.0.0",
     "spike": "^2.0.0",

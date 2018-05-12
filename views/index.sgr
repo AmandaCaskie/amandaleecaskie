@@ -7,7 +7,7 @@ extends(src='layout.sgr')
     #sections
       each(loop='section in dato.home_page[0].sections')
 
-        section(id='hair')
+        section
           h3 {{section.title}}
           .inner.grid
             .image
@@ -19,7 +19,8 @@ extends(src='layout.sgr')
               if(condition="{{ section.includeBookOnlineButton == true }}")
                 a(href class="btn btn-primary" onclick="Calendly.showPopupWidget('https://calendly.com/amandacaskiehair');return false;") Book Online
               if(condition="{{ section.includeClassList == true }}")
-                p Upcoming Classes
+                h4 Upcoming Classes
                 ul
                   each(loop='event in dato.class')
-                    li(mdi) {{ event.title }} on {{ df(event.date, "mmm  d") }} at [{{ event.location }}]({{ event.link }}). {{ event.price}}.
+                    li(md).
+                      {{ event.title }} on {{ df(event.date, "mmm  d") }} at [{{ event.location }}]({{ event.link }}). {{ event.price}}. [Sign up]({{ event.signupLink }})

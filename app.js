@@ -9,6 +9,7 @@ const df                      = require('dateformat')
 
 const SpikeDatoCMS            = require('spike-datocms')
 const postcssMixins           = require('postcss-mixins')
+const markdownItAttrs = require('markdown-it-attrs')
 
 
 const locals                  = { }
@@ -46,7 +47,8 @@ module.exports = {
     locals: (ctx) => { return Object.assign(locals,
       { pageId: pageId(ctx) },
       { df: df.bind(df) }
-    )}
+    )},
+    markdownPlugins: [  markdownItAttrs ]
   }),
   postcss: cssStandards({
     warnForDuplicates: env !== 'production',

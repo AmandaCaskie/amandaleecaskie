@@ -79,6 +79,19 @@ h4 {
 section {
   margin: 0 0 0 0;
   padding: 3rem;
+
+  & ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    & li {
+    padding: 0 0 10px 0;
+      margin: 0 0 10px 0;
+      border-bottom: solid 1px color(var(--color-rose) tint(90%));
+      font-size: 90%;
+    }
+
+  }
   &:first-child {
     margin-top: 0;
   }
@@ -172,7 +185,9 @@ section {
   font-size: 14px;
   margin: 1rem 0;
   font-family: 'Josefin Sans', sans-serif;
-
+  display: block;
+  width: 140px;
+  text-align: center;
 }
 .btn, a.btn {
   color: var(--color-rose);
@@ -215,6 +230,7 @@ nav {
     & li {
       list-style: none;
       margin-bottom: 0;
+
       & a {
         @media (--tablet), (--desktop) {
           height: 6rem;
