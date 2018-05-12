@@ -26,6 +26,9 @@ const Dato = new SpikeDatoCMS({
       }
     },
     {
+      name: 'social'
+    },
+    {
       name: 'class',
       transform: (data) => {
         if (data.date) {
