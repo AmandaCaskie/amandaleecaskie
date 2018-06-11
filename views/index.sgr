@@ -20,7 +20,15 @@ extends(src='layout.sgr')
                 a(href class="btn btn-primary" onclick="Calendly.showPopupWidget('https://calendly.com/amandacaskiehair');return false;") Book Online
               if(condition="{{ section.includeClassList == true }}")
                 h4 Upcoming Classes
-                ul
+                ul.classes
                   each(loop='event in dato.class')
-                    li(md).
-                      {{ event.title }} on {{ df(event.date, "mmm  d") }} at [{{ event.location }}]({{ event.link }}). {{ event.price}}. [Sign up]({{ event.signupLink }})
+                    li.class(data-startDate="{{ event.date }}")
+                      span(md).
+                        {{ event.title }} on {{ df(event.date, "mmm  d") }} at [{{ event.location }}]({{ event.link }}). {{ event.price}}.
+                      if(condition="{{ event.signupLink }}")
+                        p: a(href="{{ event.signupLink }}") Sign up
+    block(name="javascript")
+      script(src="/js/vendor/tinysort.min.js")
+
+      script.
+        tinysort('.classes .class',{data:'startdate', order:'asc'});
