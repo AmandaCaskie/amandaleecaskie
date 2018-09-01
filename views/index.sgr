@@ -18,7 +18,6 @@ extends(src='layout.sgr')
                 {{ section.copy }}
               if(condition="{{ section.title == 'Hair' }}")
                 div.btn-container
-                  a(href class="btn btn-primary" onclick="Calendly.showPopupWidget('https://calendly.com/amandacaskiehair');return false;") Book Online at Harlots
                   a(href class="btn btn-primary" href="http://www.medullaco.com/") Book at Medulla
 
               if(condition="{{ section.includeClassList == true }}")
