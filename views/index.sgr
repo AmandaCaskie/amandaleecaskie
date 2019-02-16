@@ -16,9 +16,10 @@ extends(src='layout.sgr')
             .info
               div(md).
                 {{ section.copy }}
-              if(condition="{{ section.title == 'Hair' }}")
-                div.btn-container
-                  a(href class="btn btn-primary" href="http://www.medullaco.com/") Book at Medulla
+
+              // if(condition="{{ section.title == 'Hair' }}")
+              //   div.btn-container
+              //     a(href class="btn btn-primary" href="http://www.medullaco.com/") Book at Medulla
 
               if(condition="{{ section.includeClassList == true }}")
                 h4 Upcoming Classes
