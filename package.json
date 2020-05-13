@@ -1,45 +1,21 @@
 {
-  "name": "amanda-lee-caskie",
-  "description": "",
-  "version": "0.0.1",
-  "author": "jennie",
-  "ava": {
-    "verbose": "true"
-  },
-  "bugs": "https://github.com/jennie/amanda-lee-caskie/issues",
-  "dependencies": {
-    "dateformat": "^3.0.3",
-    "dotenv": "^5.0.1",
-    "markdown-it-attrs": "^2.2.0",
-    "postcss-mixins": "^6.2.0",
-    "reshape-standard": "^3.0.0",
-    "spike": "^2.0.0",
-    "spike-css-standards": "^3.0.0",
-    "spike-datocms": "^2.3.1",
-    "spike-js-standards": "^2.1.0",
-    "spike-optimize": "^0.1.2",
-    "spike-page-id": "^1.0.0",
-    "sugarml": "^0.6.0",
-    "sugarss": "^1.0.0",
-    "tinysort": "^2.3.6"
-  },
-  "devDependencies": {
-    "ava": "^0.19.1",
-    "rimraf": "^2.6.1",
-    "snazzy": "^7.0.0",
-    "standard": "^11.0.1"
-  },
-  "homepage": "https://github.com/jennie/amanda-lee-caskie",
-  "main": "app.js",
+  "name": "amanda-new",
+  "version": "0.1.0",
   "private": true,
-  "repository": "https://github.com/jennie/amanda-lee-caskie",
+  "license": "MIT",
   "scripts": {
-    "lint": "standard | snazzy",
-    "precommit": "npm run lint -s",
-    "pretest": "npm run lint -s",
-    "test": "NODE_ENV=test ava",
-    "start": "spike watch",
-    "build": "spike compile",
-    "prod": "NODE_ENV=production spike compile -e production"
+    "build": "gridsome build",
+    "develop": "gridsome develop",
+    "explore": "gridsome explore"
+  },
+  "dependencies": {
+    "@gridsome/plugin-google-analytics": "^0.1.0",
+    "@gridsome/source-datocms": "^0.2.1",
+    "gridsome": "^0.7.14",
+    "gridsome-plugin-tailwindcss": "^2.2.48",
+    "luxon": "^1.24.1",
+    "marked": "^1.0.0",
+    "postcss-nested": "^4.2.1",
+    "vue-luxon": "^0.7.3"
   }
 }
