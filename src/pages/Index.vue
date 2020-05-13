@@ -115,7 +115,7 @@
           </div>
 
           <div
-            class="self-center justify-center text-xl text-gray-700 pb-2  w-full md:w-1/2 md:pl-12"
+            class="self-center justify-center text-xl text-gray-700 pb-2  px-12 mt-12 md:mt-0 md:w-1/2 md:pl-12 md:pr-0"
             v-html="marked(section.copy)"
           />
         </div>
