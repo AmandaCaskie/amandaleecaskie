@@ -33,7 +33,7 @@ export default function(Vue, { router, head, isClient }) {
   head.link.push({
     rel: "stylesheet",
     href:
-      "https://fonts.googleapis.com/css2?family=Euphoria+Script&family=Playfair+Display&Roboto&display=swap",
+      "https://fonts.googleapis.com/css2?family=Euphoria+Script&family=Playfair+Display&family=Roboto&display=swap",
   });
 
   // Basic meta tags
