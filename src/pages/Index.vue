@@ -5,9 +5,7 @@
       :style="
         `background: url(${
           $page.home.edges[0].node.headerImage.url
-        }?auto=compress&fit=crop&w=1800&crop=entropy) center center no-repeat;  
-        background-attachment: fixed;
-`
+        }?auto=compress&fit=crop&w=1800&crop=entropy) center center no-repeat; background-attachment: fixed;`
       "
     >
       <div

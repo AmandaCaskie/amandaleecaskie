@@ -27,7 +27,7 @@ export default function(Vue, { router, head, isClient }) {
   });
 
   head.htmlAttrs = { lang: "en" };
-  head.bodyAttrs = { class: "antialiased font-body font-serif" };
+  head.bodyAttrs = { class: "antialiased font-body font-sans" };
 
   // Styles
   head.link.push({

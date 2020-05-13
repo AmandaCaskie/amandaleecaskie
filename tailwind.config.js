@@ -3,7 +3,20 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        body: ["Roboto"],
+        body: [
+          "Roboto",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          Roboto,
+          "Helvetica",
+          "Arial",
+          "sans-serif",
+          "Apple Color Emoji",
+          "Segoe UI Emoji",
+          "Segoe UI Symbol",
+        ],
+
         display: ["Playfair Display"],
         maintitle: ["Euphoria Script", "cursive"],
       },
