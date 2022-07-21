@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="text-center font-display text-2xl">Upcoming Yoga Classes</p>
+    <p class="text-center font-display text-2xl">Upcoming Classes</p>
 
     <div
       v-for="workshop in workshops"
