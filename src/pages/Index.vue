@@ -118,14 +118,14 @@
           />
         </div>
         <Workshops
-          v-if="section.title === 'Movement'"
+          v-if="section.title === 'Workshops'"
           :workshops="$page.workshops.edges"
         />
       </div>
 
       <p class="text-center mt-16 mb-8 text-xs">
         <br />
-        &copy; Amanda Lee Caskie 2020
+        &copy; Amanda Lee Caskie 2023
       </p>
     </div>
   </Layout>
