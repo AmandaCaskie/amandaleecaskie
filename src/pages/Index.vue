@@ -118,7 +118,7 @@
           />
         </div>
         <Workshops
-  v-if="section.title === 'Yoga' || section.title === 'Workshops'"
+  v-if="section.title === 'Yoga' || section.title === 'Workshops' || section.title === 'Movement'"
   :workshops="$page.workshops.edges"
 />
       </div>
