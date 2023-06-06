@@ -117,10 +117,7 @@
             v-html="marked(section.copy)"
           />
         </div>
-        <Workshops
-  v-if="section.title === 'Yoga' || section.title === 'Workshops' || section.title === 'Movement'"
-  :workshops="$page.workshops.edges"
-/>
+        <Workshops v-if="section.title === 'Movement'" :workshops="$page.workshops.edges" />
       </div>
 
       <p class="text-center mt-16 mb-8 text-xs">
