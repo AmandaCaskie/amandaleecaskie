@@ -1,31 +1,31 @@
 <template>
-  <Layout>
+  <div>
     <header
-      class="bg-header flex items-center w-full justify-center h-auto py-12 md:py-64 "
+      class="bg-header flex items-center w-full justify-center h-auto py-12 md:py-64"
       :style="
         `background: url(${
-          $page.home.edges[0].node.headerImage.url
+          home?.headerImage?.url
         }?auto=compress) center center no-repeat; background-attachment: fixed;`
       "
     >
       <div
-        class="bg-white  opacity-25 opacity-75 font-serif mx-4 p-4 text-center md:p-8 rounded-lg"
+        class="bg-white opacity-25 opacity-75 font-serif mx-4 p-4 text-center md:p-8 rounded-lg"
       >
         <h1
           class="font-maintitle text-5xl sm:text-7xl block text-center sm:pr-8 text-gray-700"
         >
-          {{ $page.home.edges[0].node.title }}
+          {{ home?.title }}
         </h1>
         <p
           class="center text-y text-yellow-600 text-center text-2xl uppercase tracking-wider font-display"
         >
-          {{ $page.home.edges[0].node.tagline }}
+          {{ home?.tagline }}
         </p>
       </div>
     </header>
-    <div class="max-w-3xl px-4 mx-auto">
+    <div class="max-w-4xl px-4 mx-auto">
       <div class="social">
-        <a :href="$page.social.edges[0].node.instagram">
+        <a :href="social?.instagram">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -43,7 +43,7 @@
             <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
           </svg>
         </a>
-        <a :href="$page.social.edges[0].node.twitter">
+        <a :href="social?.twitter">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -61,7 +61,7 @@
             ></path>
           </svg>
         </a>
-        <a :href="$page.social.edges[0].node.facebook">
+        <a :href="social?.facebook">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -80,32 +80,21 @@
           </svg>
         </a>
       </div>
-      <!-- <div class="mt-8 md:mt-16 flex flex-wrap items-center justify-center">
-        <nav>
-          <ul>
-            <li
-              v-for="section in $page.home.edges[0].node.sections"
-              :key="section.id"
-            >
-              <a href="">{{ section.title }}</a>
-            </li>
-          </ul>
-        </nav>
-      </div> -->
 
       <div
-        v-for="section in $page.home.edges[0].node.sections"
+        v-for="section in home?.sections"
         :key="section.id"
         class="mt-24"
       >
-        <h2 class="text-5xl text-center font-maintitle mt-12" id="yoga">
+        <h2 class="text-5xl text-center font-maintitle mt-12" :id="section.title.toLowerCase()">
           {{ section.title }}
         </h2>
 
-        <div class=" flex flex-wrap mt-6 mb-24">
-          <div class="w-full md:w-1/2 self-center justify-center ">
+        <div class="flex flex-wrap mt-6 mb-24">
+          <div class="w-full md:w-1/2 self-center justify-center">
             <img
-              class="mx-auto rounded-lg "
+              v-if="section.image && section.image.url"
+              class="mx-auto rounded-lg"
               :src="
                 `${section.image.url}?auto=compress&fit=crop&w=350&crop=entropy`
               "
@@ -113,94 +102,86 @@
           </div>
 
           <div
-            class="self-center justify-center text-xl text-gray-700 pb-2  px-12 mt-12 md:mt-0 md:w-1/2 md:pl-12 md:pr-0"
+            class="self-center justify-center text-lg text-gray-700 pb-2 px-12 mt-12 md:mt-0 md:w-1/2 md:pl-12 md:pr-0"
             v-html="marked(section.copy)"
           />
         </div>
+        
+        <!-- Display workshops after the Movement section -->
         <Workshops
-          v-if="section.title === 'Yoga'"
-          :workshops="$page.workshops.edges"
+          v-if="section.title === 'Movement' && workshops && workshops.length > 0"
+          :workshops="workshops"
         />
       </div>
 
       <p class="text-center mt-16 mb-8 text-xs">
         <br />
-        &copy; Amanda Lee Caskie 2023
+        &copy; Amanda Lee Caskie {{ new Date().getFullYear() }}
       </p>
     </div>
-  </Layout>
+  </div>
 </template>
 
-<page-query>
-query {
-  metadata {
-    siteName
-  }
+<script setup>
+import { DateTime } from 'luxon';
 
-  home: allDatoHomePage {
-    edges {
-      node {
+// Define the GraphQL queries
+const homeQuery = `
+  query MyQuery {
+    homePage {
+      title
+      tagline
+      headerImage {
+        url
+      }
+      sections {
+        id
         title
-        tagline
-        headerImage {
+        copy
+        image {
           url
         }
-        sections {
-          title
-          copy
-          image {
-            url
-          }
-        }
       }
     }
-  }
-  social: allDatoSocialMedia {
-    edges {
-      node {
-        twitter
-        instagram
-        facebook
-      }
+    social {
+      twitter
+      instagram
+      facebook
+    }
+    allClasses(orderBy: date_ASC) {
+      id
+      title
+      date
+      signupLink
+      price
+      location
     }
   }
+`;
 
-  workshops: allDatoClass(sortBy: "date", order:ASC) {
-    edges {
-      node {
-        title
-        date
-        signupLink
-        price
-      }
-    }
-  }
-}
-</page-query>
-<style lang="postcss">
-.social {
-  @apply flex text-center justify-center align-middle mt-24;
-  svg {
-    @apply mx-6;
-  }
+// Fetch data from DatoCMS
+const { data, error } = await useAsyncDatoCms({ query: homeQuery });
+
+// Add debug info
+console.log('DatoCMS response:', data.value);
+if (error.value) {
+  console.error('DatoCMS error:', error.value);
 }
 
-nav ul {
-  @apply flex list-none m-0 p-0;
-  li {
-    @apply text-purple-400 text-3xl px-0;
-  }
-}
-</style>
-<script>
-import Workshops from "../components/Workshops";
+// Extract data from the response
+const home = data.value?.homePage;
+const social = data.value?.social;
+const workshops = data.value?.allClasses;
 
-export default {
-  components: {
-    Workshops,
-  },
-  metaInfo: {
-    title: "Amanda Lee Caskie Whole Beauty",
-  },
-};
-</script>
+// Debug workshops data specifically
+console.log('Workshops data:', workshops);
+console.log('Workshops count:', workshops?.length || 0);
+
+// Get the marked function from the plugin
+const { $marked: marked } = useNuxtApp();
+
+// Set page metadata
+useHead({
+  title: 'Amanda Lee Caskie Whole Beauty',
+});
+</script> 

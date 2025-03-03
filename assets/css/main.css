@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .social {
+    @apply flex text-center justify-center align-middle mt-24;
+  }
+  
+  .social svg {
+    @apply mx-6;
+  }
+  
+  nav ul {
+    @apply flex list-none m-0 p-0;
+  }
+  
+  nav ul li {
+    @apply text-purple-400 text-3xl px-0;
+  }
+  
+  .bg-header {
+    background-attachment: fixed;
+    background-position: center center;
+    background-repeat: no-repeat;
+  
+  
+  }
+} 
+
+p a, ul li a {
+  @apply underline;
+}
