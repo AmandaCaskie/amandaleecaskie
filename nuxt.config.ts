@@ -5,11 +5,13 @@ export default defineNuxtConfig({
   
   modules: [
     '@nuxtjs/tailwindcss',
-    '@hexdigital/nuxt-datocms'
   ],
   
-  datocms: {
-    publicReadOnlyToken: process.env.DATO_API_KEY || '',
+  // Adding public runtime config for DatoCMS token
+  runtimeConfig: {
+    public: {
+      datocmsToken: process.env.DATO_API_KEY || '',
+    }
   },
   
   css: [

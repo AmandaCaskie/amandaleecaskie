@@ -123,6 +123,8 @@
 </template>
 
 <script setup>
+import { ref, watch, onMounted } from 'vue';
+import { useQuerySubscription } from 'vue-datocms';
 import { DateTime } from 'luxon';
 
 // Define the GraphQL queries
@@ -159,26 +161,81 @@ const homeQuery = `
   }
 `;
 
-// Fetch data from DatoCMS
-const { data, error } = await useAsyncDatoCms({ query: homeQuery });
-
-// Add debug info
-console.log('DatoCMS response:', data.value);
-if (error.value) {
-  console.error('DatoCMS error:', error.value);
-}
-
-// Extract data from the response
-const home = data.value?.homePage;
-const social = data.value?.social;
-const workshops = data.value?.allClasses;
-
-// Debug workshops data specifically
-console.log('Workshops data:', workshops);
-console.log('Workshops count:', workshops?.length || 0);
+// Initialize reactive data
+const data = ref(null);
+const error = ref(null);
+const home = ref(null);
+const social = ref(null);
+const workshops = ref(null);
 
 // Get the marked function from the plugin
 const { $marked: marked } = useNuxtApp();
+
+// Initialize with a server-side fetch for SSR
+if (process.server) {
+  // Simple fetch for server-side rendering
+  const fetchData = async () => {
+    try {
+      const response = await fetch('https://graphql.datocms.com/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${useRuntimeConfig().public.datocmsToken}`,
+        },
+        body: JSON.stringify({ query: homeQuery }),
+      });
+      
+      const result = await response.json();
+      data.value = result.data;
+      
+      // Extract data
+      home.value = data.value?.homePage;
+      social.value = data.value?.social;
+      workshops.value = data.value?.allClasses;
+    } catch (err) {
+      error.value = err;
+      console.error('Error fetching data:', err);
+    }
+  };
+  
+  fetchData();
+}
+
+// Only use the subscription API on the client side
+onMounted(() => {
+  if (process.client) {
+    const subscription = useQuerySubscription({
+      query: homeQuery,
+      token: useRuntimeConfig().public.datocmsToken,
+      // Disable real-time updates for initial load
+      initial: true,
+      enabled: true,
+    });
+    
+    // Update our reactive data when the subscription data changes
+    watch(() => subscription.data.value, (newData) => {
+      if (newData) {
+        data.value = newData;
+        home.value = newData?.homePage;
+        social.value = newData?.social;
+        workshops.value = newData?.allClasses;
+        
+        // Debug info
+        console.log('DatoCMS response:', newData);
+        console.log('Workshops data:', workshops.value);
+        console.log('Workshops count:', workshops.value?.length || 0);
+      }
+    }, { immediate: true });
+    
+    // Handle errors
+    watch(() => subscription.error.value, (newError) => {
+      if (newError) {
+        error.value = newError;
+        console.error('DatoCMS error:', newError);
+      }
+    }, { immediate: true });
+  }
+});
 
 // Set page metadata
 useHead({
